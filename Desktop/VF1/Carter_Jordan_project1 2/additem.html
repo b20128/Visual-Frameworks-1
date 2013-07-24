@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta keyword="todo, brainfart, BrainAid"/>
+		<meta description="use this for when you just remembered somthing important, or you dont want to forget it."/>
+		<meta name="robots" content="index, follow"/>
+		<meta name="viewport" content="user-scalable=no, wdith=device-width"/>
+		<meta name="Handheldfriendly" content="True"/>
+		<title>Gotta Write This Down!</title>
+	</head>
+	<body
+		<h1></h1>
+		<form action="" method="post">
+			<fieldset>
+				<legend>Gotta Write this down...</legend>
+				<ul>
+					<li>
+						<label for="itWasA">It was a...</label>
+						<select id="itWasA">
+							<optgroup label="Objects">
+								<option value="dream">Dream</option>
+								<option value="idea">Idea</option>
+								<option value="song">Song</option>
+								<option value="misc">Not Sure</option>
+							</optgroup>
+						</select>
+					</li>
+					<li><label for="Iremember">What do you remember?</label>
+						<input type="checkbox" value="People" id="people"/>People
+						<input type="checkbox" value="Animals" id="animals"/>Animals
+						<input type="checkbox" value="Colors" id="colors"/>Colors
+						<input type="checkbox" value="Feeling" id="feeling"/>Feelings
+						<input type="checkbox" value="Images" id="images"/>Images	
+					</li>
+					<li><label for="specifics">Anything Specific?</label><input type="text" id="specifics" placeholder="a clock showing 12:01"/>			
+					</li>
+					<li>Level Of Importance or Urgency?(0-10)
+						<input type="range" name="importance" min="0" max="10"/>
+					</li>
+					<li>How Privileged is This Info?
+						<ul>
+							<li><input type="radio" value="TopSecret" id="topsecret" name="secrt"/><label for="topsecret">Top Secret</label></li>
+							<li><input type="radio" value="PrivilegedInfo" id="privileged" name="secrt"/><label for="privileged">Privileged Information</label></li>
+							<li><input type="radio" value="PublicKnowledge" id="public" name="secrt"/><label for="public">Public Knowledge</label></li>
+						</ul> 
+					</li>
+					<li>
+						<label for="indepth">Tell Me More...</label><textarea id="indepth"></textarea>
+					</li>
+					<input type="hidden"value="true" />		
+				</ul>
+			</fieldset>
+			<input type="submit"
+		
+	</html>
