@@ -5,8 +5,9 @@ Project 2 javascript
 */
 //Checking to see if the DOM is loaded
 window.addEventListener("DOMContentLoaded", function(){
-    
+alert("javascript loaded!!");
 
+                              
     //get element by id function
     function $(x) {
         var myElement = document.getElementById(x);
