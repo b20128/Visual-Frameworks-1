@@ -7,7 +7,11 @@ Project 2 javascript
 window.addEventListener("DOMContentLoaded", function(){
 alert("javascript loaded!!");
 
-                              
+    //variables
+    var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visonary"],
+       recurringValue,
+       rememberValue="No";
+       
     //get element by id function
     function $(x) {
         var myElement = document.getElementById(x);
@@ -56,14 +60,14 @@ alert("javascript loaded!!");
             case "on":
                 $('myForm').style.disply = "none";
                 $('clear').style.display = "inline";
-                $('displayLink').style.display = "none";
-                $('addNew').sty.display = "inline";
+                $('displayData').style.display = "none";
+                $('addNew').style.display = "inline";
                 break;
             case "off":
                 $('myForm').style.disply = "block";
                 $('clear').style.display = "inline";
-                $('displayLink').style.display = "inline";
-                $('addNew').sty.display = "none";
+                $('displayData').style.display = "inline";
+                $('addNew').style.display = "none";
                 $('items').style.display = "none";
                 break;
             default:
@@ -89,13 +93,15 @@ alert("javascript loaded!!");
         alert("ok, got it!");
         
     }
-    function displayData() { 
+    function displayData() {
+        toggleControls("on");
         //writes the data from local storage
-        var MakeDiv = doctument.createElement('div');
+        var makeDiv = document.createElement('div');
         makeDiv.setAttribute("id","items");
         var makeList = document.createElement('ul');
         makeDiv.appendChild(makeList);
         document.body.appendChild(makeDiv);
+        $('items').style.display = "block";
         for (var i = 0, len=localStorage.length; i<len;i++) {
             var makeLi = document.createElement('li');
             makeList.appendChild(makeLi);
@@ -104,7 +110,7 @@ alert("javascript loaded!!");
             //convert string to object using JSON
             var obj = JSON.parse(value);
             var makeSubList= document.createElement('ul');
-            makeli.appendChild(makeSubList);
+            obj.appendChild(makeSubList);
             for(var n in obj) {
                 var makeSubli = document.createElement('li');
                 makeSubList.appendChild(makeSubli);
@@ -113,24 +119,30 @@ alert("javascript loaded!!");
             }
         }
     }
+    function clearLocal(){
+        if (localStorage.length===0) {
+            alert("there is no data to clear")
+        }else{
+            localStorage.clear();
+            alert("All data cleared.")
+            window.location.reload();
+            return false;
+        }
+    }
     
     
     
     
    
     
-    //variables
-    var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visonary"],
-       recurringValue,
-       rememberValue="No";
+    
     makeSelect();
     
     //click eventListeners
-    var displayLink =$("displayData")
+    var displayLink =$("displayData");
     displayLink.addEventListener("click", displayData);
-    /*var clearLink = $("clear");
-    clearLink.addEventListener("click", clearData);
-    */
+    var clearLink = $("clear");
+    clearLink.addEventListener("click", clearLocal);
     var save = $("submit");
     save.addEventListener("click", storeFormInfo);
     
