@@ -11,14 +11,14 @@ alert("javascript loaded!!");
     //get element by id function
     function $(x) {
         var myElement = document.getElementById(x);
-        return myElement;
+        return myElement; 
     }
     //creating our drop down list
     function makeSelect() {
         var formTag = document.getElementsByTagName('form'),
             selectLi = $("select"),
             makeSelect = document.createElement("select");
-            makeSelect.setAttribute("id", "dreamType");
+            makeSelect.setAttribute("id", "dreamKind");
         for (var i=0, j=dreamKind.length; i<j; i++) {
             var makeOption = document.createElement('option');
             var optText = dreamKind[i];
@@ -30,15 +30,13 @@ alert("javascript loaded!!");
     }
     
     
-   
-    
     //find the value of selected radio button
-    function getSelectedRadio() {
+    function getSelectedRadio(){
         var radio = document.forms[0].recurring;
         for (var i=0; i<radio.length;i++) {
             if (radio[i].checked) {
                 recurringValue=radio[i].value;
-            }
+            }return recurringValue
             
         }
     }
@@ -48,7 +46,28 @@ alert("javascript loaded!!");
         if ($('remember').checked) {
             rememberValue= $('remember').value;
         }else{
-            rememberValue= "no";
+            rememberValue= "No";
+        }
+    }
+    
+    //toggle controls    
+    function toggleControls(n){
+        switch(n){
+            case "on":
+                $('myForm').style.disply = "none";
+                $('clear').style.display = "inline";
+                $('displayLink').style.display = "none";
+                $('addNew').sty.display = "inline";
+                break;
+            case "off":
+                $('myForm').style.disply = "block";
+                $('clear').style.display = "inline";
+                $('displayLink').style.display = "inline";
+                $('addNew').sty.display = "none";
+                $('items').style.display = "none";
+                break;
+            default:
+               return false;
         }
     }
     
@@ -59,9 +78,9 @@ alert("javascript loaded!!");
         //gather up our values in an object.
         //object properties contain an array w/ form lable and inputs values.
         var item            = {};
-            item.ItWasA     = ["Dream Kind: ",$('dreamType').value];
+            item.ItWasA     = ["Dream Kind: ",$('dreamKind').value];
             item.specifics  = ["Any Specifics: ", $('specifics').value];
-            item.important  = ["Level of Importance: ",$('importance').value];
+            item.important  = ["Level of Importance: ",$('important').value];
             item.privileged = ["How Privileged Is This Info?",recurringValue];
             item.remember   = ["I Remember?", rememberValue];
             item.indepth    = ["Tell Me More: ", $('indepth').value];
@@ -70,22 +89,49 @@ alert("javascript loaded!!");
         alert("ok, got it!");
         
     }
+    function displayData() { 
+        //writes the data from local storage
+        var MakeDiv = doctument.createElement('div');
+        makeDiv.setAttribute("id","items");
+        var makeList = document.createElement('ul');
+        makeDiv.appendChild(makeList);
+        document.body.appendChild(makeDiv);
+        for (var i = 0, len=localStorage.length; i<len;i++) {
+            var makeLi = document.createElement('li');
+            makeList.appendChild(makeLi);
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            //convert string to object using JSON
+            var obj = JSON.parse(value);
+            var makeSubList= document.createElement('ul');
+            makeli.appendChild(makeSubList);
+            for(var n in obj) {
+                var makeSubli = document.createElement('li');
+                makeSubList.appendChild(makeSubli);
+                var optSubText = obj[n][0]+" "+obj[n][1];
+                makeSubli.innerHTML = optSubText;
+            }
+        }
+    }
+    
+    
     
     
    
     
     //variables
-    var dreamKind =["--what kind of dream?--", "dream", "nightmare", "visonary"]
+    var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visonary"],
        recurringValue,
-       rememberValue;
+       rememberValue="No";
     makeSelect();
     
-    /*click eventListeners
+    //click eventListeners
     var displayLink =$("displayData")
     displayLink.addEventListener("click", displayData);
     /*var clearLink = $("clear");
     clearLink.addEventListener("click", clearData);
-    */var save = $("submit");
+    */
+    var save = $("submit");
     save.addEventListener("click", storeFormInfo);
     
 
