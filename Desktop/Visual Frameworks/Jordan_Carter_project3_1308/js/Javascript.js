@@ -96,7 +96,7 @@ alert("javascript loaded!!");
             //convert string to object using JSON
             var obj = JSON.parse(value);
             var makeSubList= document.createElement('li');
-            makeSubList.appendChild(makeSubList);
+            makeDiv.appendChild(makeSubList);
             for(var n in obj) {
                 var makeSubli = document.createElement('li');
                 makeSubList.appendChild(makeSubli);
