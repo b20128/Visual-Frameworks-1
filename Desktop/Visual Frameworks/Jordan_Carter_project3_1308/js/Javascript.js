@@ -85,22 +85,26 @@ alert("javascript loaded!!");
         var makeList = document.createElement('ul');
         makeDiv.appendChild(makeList);
         document.body.appendChild(makeDiv);
-        $('items').style.display = "inherit";
+        makeDiv.style.display="block";
+        $('items').style.display="block";
         for (var i = 0, len=localStorage.length; i<len;i++) {
             var makeLi = document.createElement('li');
+            var linksli = document.createElement('li');
             makeList.appendChild(makeLi);
             var key = localStorage.key(i);
             var value = localStorage.getItem(key);
             //convert string to object using JSON
-            var obj = JSON.value;
-            var makeSubList= document.createElement('ul');
-            obj.appendChild(makeSubList);
+            var obj = JSON.parse(value);
+            var makeSubList= document.createElement('li');
+            makeSubList.appendChild(makeSubList);
             for(var n in obj) {
-                var makeSubli = document.createElement('dl');
+                var makeSubli = document.createElement('li');
                 makeSubList.appendChild(makeSubli);
                 var optSubText = obj[n][0]+" "+obj[n][1];
                 makeSubli.innerHTML = optSubText;
+                makeSubList.appendChild(linksli);
             }
+            //makeItemLinks();//creating our edit and delete buttons for each item.
         }
     }
     
