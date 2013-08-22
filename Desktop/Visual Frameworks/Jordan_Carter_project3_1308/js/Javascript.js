@@ -11,6 +11,7 @@ alert("javascript loaded!!");
     var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visonary"],
        recurringValue,
        rememberValue="No";
+       errMsg = $('errors');
        
     //get element by id function
     function $(x) {
@@ -72,11 +73,20 @@ alert("javascript loaded!!");
         }
     }
     
-    function storeFormInfo() {
+    function storeFormInfo(key) {
+        //if theres no key, generate one for new item
+        if (!key) {
+            var id          	= Math.floor(Math.random()*100000000);
+        }else{
+            //set the id to the existing key we're editing already so it will save over the data
+            //The key is the same key that's been passed along from editSubmit event handler
+            //to the validate fucn then her into storeData function
+            var id = key;
+        }
          if (localStorage == 0) {
             localStorage.clear();
          }
-         var id          	= Math.floor(Math.random()*100000000);
+         
         getSelectedRadio();
         getCheckboxValue();
         //gather up our values in an object.
@@ -146,7 +156,7 @@ alert("javascript loaded!!");
         deleteLink.href =  "#";
         deleteLink.key = key;
         var deleteText = "Delete Dream";
-        //deleteLink.addEventListener('click', deleteItem);
+        deleteLink.addEventListener('click', deleteItem);
         deleteLink.innerHTML = deleteText;
         linksli.appendChild(deleteLink);
     }
@@ -174,7 +184,25 @@ alert("javascript loaded!!");
             $('remember').setAttribute('checked',"checked");
         }
         //Remove the initial listener from the nput "Save Info" button
-        
+        save.removeEventListener("click", storeFormInfo);
+        //changeSubmit Button Value to Edit Button
+        $("submit").value = "edit data";
+        var editSubmit = $('submit');
+        //saving the key value established in this function as a property of the editSubmit event
+        //so we can use that value when we want to save our edited content
+        editSubmit.addEventListener("click",validate);
+        editSubmit.key = this.key;
+    }
+    
+    function deleteItem() {
+        var ask = confirm("are you sure you want to get rid of this dream?");
+        if (ask) {
+            localStorage.removeItem(this.key);
+            alert("contact has been deleted.")
+            window.location.reload();
+        }else{
+            alert("contact wasn't deleted");
+        }
     }
     
     function clearLocal(){
@@ -184,7 +212,52 @@ alert("javascript loaded!!");
             localStorage.clear();
             alert("All data cleared.")
             window.location.reload();
+            return false;
         }
+    }
+    
+    function validate(e){
+        //define the elements we waant to check
+        var getdreamKind = $('dreamKind');
+        var getSpecifics = $('specifics');
+        var getInDepth   = $('indepth');
+        
+        //get Error messages
+        var messageAry = [];
+        //dreamKind validation
+        if (getdreamKind.value=="--what kind of dream?--") {
+            var groupError = "Please Choose a Group...";
+            getdreamKind.style.border= "1px solid red";
+            messageAry.push(groupError);
+        }
+        
+        //Specifics Validation
+        if (getSpecifics.value === "") {
+            var specificsErr = "Please enter at least 1 detail...";
+            getSpecifics.style.border= "1px solid red";
+            messageAry.push(specificsErr);
+        }
+        
+        //InDepth Validation
+        if (getInDepth.value === "") {
+            var inDepthErr = "Please enter at least 1 detail...";
+            getInDepth.style.border= "1px solid red";
+            messageAry.push(inDepthErr);
+        }
+        //if there were errors, display them on the screen
+        if (messageAry.length>=1){
+            for (var i=0,j=messageAry.length;i<j;i++) {
+                var txt= document.createElement('li');
+                txt.innerHTML = messageAry[i];
+                errMsg.appendChild(txt);
+            }
+            e.preventDefault();
+            return false;
+        }else{
+            //if all is ok, Save our Data. Sending thee key value (which came from the editData Function)
+            storeFormInfo(this.key);
+        }
+        
     }
     
     makeSelect();
@@ -195,7 +268,7 @@ alert("javascript loaded!!");
     var clearLink = $("clear");
     clearLink.addEventListener("click", clearLocal);
     var save = $("submit");
-    save.addEventListener("click", storeFormInfo);
+    save.addEventListener("click", validate);
     
 
 
