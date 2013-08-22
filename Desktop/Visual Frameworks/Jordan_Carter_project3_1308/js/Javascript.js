@@ -4,9 +4,9 @@ VFW 1308
 Project 2 javascript
 */
 //Checking to see if the DOM is loaded
+localStorage.clear();
 window.addEventListener("DOMContentLoaded", function (){
 alert("javascript loaded!!");
-
     //variables
     var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visonary"],
        recurringValue,
@@ -47,12 +47,30 @@ alert("javascript loaded!!");
     //find checkbox value    
     function getCheckboxValue() {
         if ($('remember').checked) {
-            rememberValue= $('remember').value;
-        }else{
-            rememberValue= "No";
+            rememberValue = $('remember').value;
+        }else{rememberValue= "None";
         }
     }
-  
+    
+    function toggleControls(n) {
+        switch (n) {
+            case "on":
+                $("myForm").style.display = "none";
+                $("clear").style.display = "inline";
+                $('displayData').style.display = "none";
+                $('addNew').style.display = "inline";                
+                break;
+            case "off":
+                $("myForm").style.display = "block";
+                $("clear").style.display = "inline";
+                $('displayData').style.display = "inline";
+                $('addNew').style.display = "none";
+                $('items').style.display = "none";
+                break;
+            default:
+                return false;
+        }
+    }
     
     function storeFormInfo() {
          if (localStorage == 0) {
@@ -67,7 +85,7 @@ alert("javascript loaded!!");
             item.ItWasA     = ["Dream Kind: ",$('dreamKind').value];
             item.specifics  = ["Any Specifics: ", $('specifics').value];
             item.important  = ["Level of Importance: ",$('important').value];
-            item.privileged = ["How Privileged Is This Info?",recurringValue];
+            item.recurring = ["Have this dream before?: ",recurringValue];
             item.remember   = ["I Remember?", rememberValue];
             item.indepth    = ["Tell Me More: ", $('indepth').value];
         //save data to local storage. Use stringafy to convert our objects to a string
@@ -76,13 +94,14 @@ alert("javascript loaded!!");
     }
     
     function displayData() {
+        toggleControls("on");
         if (localStorage.length==0) {
             alert("there is no data to display");
         }
         //writes the data from local storage
         var makeDiv = document.createElement('div');
         makeDiv.setAttribute("id","items");
-        var makeList = document.createElement('ul');
+        var makeList = document.createElement('ol');
         makeDiv.appendChild(makeList);
         document.body.appendChild(makeDiv);
         makeDiv.style.display="block";
@@ -104,8 +123,58 @@ alert("javascript loaded!!");
                 makeSubli.innerHTML = optSubText;
                 makeSubList.appendChild(linksli);
             }
-            //makeItemLinks();//creating our edit and delete buttons for each item.
+            makeItemLinks(localStorage.key(i), linksli);//creating our edit and delete buttons for each item.
         }
+    }
+    //Making our Item links
+    //creating edit and delete links for each stored item
+    function makeItemLinks(key, linksli) {
+        //add single edit link
+        var editLink = document.createElement('a');
+        editLink.href = "#";
+        editLink.key = key;
+        var editText = "Edit Dream";
+        editLink.addEventListener("click", editItem);
+        editLink.innerHTML = editText;
+        linksli.appendChild(editLink);
+        
+        //add line break for clarity and read-ability
+        var breakTag = document.createElement("br")
+        linksli.appendChild(breakTag)
+        //add a delete single item link
+        var deleteLink = document.createElement("a");
+        deleteLink.href =  "#";
+        deleteLink.key = key;
+        var deleteText = "Delete Dream";
+        //deleteLink.addEventListener('click', deleteItem);
+        deleteLink.innerHTML = deleteText;
+        linksli.appendChild(deleteLink);
+    }
+    
+    function editItem() {
+        //Grab the data from our item from localStorage
+        var value = localStorage.getItem(this.key);
+        var item = JSON.parse(value);
+        
+        //show the form
+        toggleControls('off');
+        
+        //populate the form fields with current localStorage values
+        $('dreamKind').value = item.ItWasA[1];
+        $('specifics').value = item.specifics[1];
+        $('important').value = item.important[1];
+        $('indepth').value = item.indepth[1];
+        var radios = document.forms[0].recurring;
+        for (var i = 0; i<radios.length;i++) {
+            if (radios[i].value=="recurring"&& item.recurring[1]=="recurring") {
+                radios[i].setAttribute("checked","checked");
+            }
+        }
+        if (item.remember[1] == "Yes") {
+            $('remember').setAttribute('checked',"checked");
+        }
+        //Remove the initial listener from the nput "Save Info" button
+        
     }
     
     function clearLocal(){
@@ -115,15 +184,8 @@ alert("javascript loaded!!");
             localStorage.clear();
             alert("All data cleared.")
             window.location.reload();
-            return false;
         }
     }
-    
-    
-    
-    
-   
-    
     
     makeSelect();
     
@@ -137,4 +199,4 @@ alert("javascript loaded!!");
     
 
 
-});
+        });
