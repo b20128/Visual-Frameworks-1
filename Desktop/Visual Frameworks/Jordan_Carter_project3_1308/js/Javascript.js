@@ -10,7 +10,7 @@ alert("javascript loaded!!");
     //variables
     var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visonary"],
        recurringValue,
-       rememberValue="No";
+       rememberValue;
        errMsg = $('errors');
        
     //get element by id function
@@ -47,9 +47,15 @@ alert("javascript loaded!!");
     
     //find checkbox value    
     function getCheckboxValue() {
-        if ($('remember').checked) {
-            rememberValue = $('remember').value;
-        }else{rememberValue= "None";
+        var checkboxes = document.forms[0].obj;
+        var checkedValue = [];
+        for(i=0,j=checkboxes.length; i<j; i++) {
+            if (checkboxes[i].checked) {
+                var checkedboxes = checkboxes[i].value;
+                checkedValue.push(checkedboxes);
+                var rememberValue = JSON.stringify(checkedValue);
+                return rememberValue;
+            }
         }
     }
     
@@ -180,9 +186,7 @@ alert("javascript loaded!!");
                 radios[i].setAttribute("checked","checked");
             }
         }
-        if (item.remember[1] == "Yes") {
-            $('remember').setAttribute('checked',"checked");
-        }
+        $('remember').value = item.remember[1];
         //Remove the initial listener from the nput "Save Info" button
         save.removeEventListener("click", storeFormInfo);
         //changeSubmit Button Value to Edit Button
@@ -215,6 +219,7 @@ alert("javascript loaded!!");
             return false;
         }
     }
+    
     
     function validate(e){
         //define the elements we waant to check
@@ -259,6 +264,9 @@ alert("javascript loaded!!");
         }
         
     }
+    function showForm() {
+        toggleControls('off');
+    }
     
     makeSelect();
     
@@ -269,7 +277,8 @@ alert("javascript loaded!!");
     clearLink.addEventListener("click", clearLocal);
     var save = $("submit");
     save.addEventListener("click", validate);
-    
+    var addLink =$("addNew");
+    addLink.addEventListener("click", showForm);
 
 
         });
