@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Gotta Write This Down!</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css"/>
+		<meta charset="utf-8"/>
+		<meta keyword="notepad, Dream, dreamjournal"/>
+		<meta description="a simple dream journal."/>
+		<meta name="robots" content="index, follow"/>
+		<meta name="viewport" content="user-scalable=no, width=device-width"/>
+		<meta name="Handheldfriendly" content="True"/>
+		
+	</head>
+	<body
+		<header><h1 id="title">My Dream Form</h1></header>
+		<nav>	
+			<a href="#" id="addNew" style="display: none;">Add New</a>
+			<a href="#"  id="clear">Clear Data</a> 
+			<a href="#"  id="displayData">Display Data</a>
+		</nav>    
+		<form action="" method="post" id="myForm">
+			<fieldset id="ideaForm">
+				<div><legend>Gotta Write this down...</legend></div>
+				<ul id= "errors">
+				</ul>
+				<ul id= "q&a">
+					<li id="select"><label for="itWasA">It was a...</label><br /></li>
+						
+					<li id="remember"><div><label for="Iremember">What do you remember?</label></div>
+						<ul>
+							<li><input name='obj' type="checkbox" value="People" id="people"/>People</li>
+							<li><input name='obj' type="checkbox" value="Animals" id="animals"/>Animals</li>
+							<li><input name='obj' type="checkbox" value="Colors" id="colors"/>Colors</li>
+							<li><input name='obj' type="checkbox" value="Feeling" id="feeling"/>Feelings</li>
+							<li><input name='obj' type="checkbox" value="Images" id="images"/>Images</li>
+						</ul>
+					</li>   
+					<li><div><label for="specifics">Anything Specific?</label></div><input type="text" id="specifics" placeholder="a clock showing 12:01"/>			
+					</li>
+					<li id="important"><label>Level Of Importance or Urgency?(0-10)</label> 
+						<div><input type="range" name="importance" min="0" max="10"/></div>
+					</li>
+					<li><label>How oftain have you had this dream?</label>
+						<ul>
+							<li><input type="radio" value="recurring" id="recurring"/><label for="recurring">Recurring</label></li>
+						</ul> 
+					</li>
+					<li>
+						<label for="indepth">Tell Me More...</label><textarea id="indepth"></textarea>
+					</li>	
+				</ul>
+			
+			</fieldset>
+		<input type="button" value="Save Info" id="submit"/><br />
+		</form>
+	</body>
+	<script src="js/json.js" type="text/javascript"></script>
+	<script src="js/Javascript.js" type="text/javascript"></script>
+</html>

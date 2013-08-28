@@ -1,0 +1,81 @@
+/*
+Jordan Carter
+VFW 1308
+CSS sheet
+project 2
+*/
+body{
+    background-image:url(http://www.plotinus.com/vega_john5b.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+h1{
+    background-color: transparent;
+    border: 2px #000;
+    width: inherit;
+    color: white;
+    font-family: sans-serif;
+    font-size: x-large;
+    text-align: center;
+    text-shadow: 3px;
+    text-emphasis: none;
+    text-outline: 1px #ffffff;
+}
+h2{
+    background-color: transparent;
+    border: 2px #000;
+    width: inherit;
+    color: white;
+    text-align: center;
+    text-shadow: 3px;
+    text-emphasis: none;
+    text-outline: .5px #ffffff;
+}
+a{
+  color: #fff000;
+  background-color: transparent;
+}
+a:hover{
+    color: red;
+} 
+fieldset{
+    background: #000;
+    border: dashed;
+    width: auto;
+    color: white;
+    font: cursive large 100 bold;
+    text-color: #fff;
+    text-align: inherit;
+    text-shadow: 3px;
+    text-emphasis: none;
+    text-outline: .5px #ffffff;  
+}
+legend{
+    font: 100 bold larger sans-serif;
+    color: red;
+    alignment-adjust: central;
+}
+div{
+    background: #000;
+    border: 1px thin;
+    width: auto;
+    color: #fff;
+    font: cursive large 100 bold;
+    text-align: inherit;
+    text-shadow: 3px;
+    text-emphasis: none;
+    text-transform: !important
+}
+input[type="button"]{
+    padding: 5px;
+    font-weight: bold;
+}
+ul{
+    color: white;
+}
+dl{
+    color: white;
+}
+li{
+    color: #fff;
+}
