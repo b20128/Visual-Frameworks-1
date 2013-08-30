@@ -4,11 +4,11 @@ VFW 1308
 Project 4 javascript
 */
 //Checking to see if the DOM is loaded
-localStorage.clear();
+
 window.addEventListener("DOMContentLoaded", function (){
 alert("javascript loaded!!");
     //variables
-    var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visonary"],
+    var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visionary"],
        recurringValue,
        rememberValue;
        errMsg = $('errors');
@@ -37,12 +37,12 @@ alert("javascript loaded!!");
     
     //find the value of selected radio button
     function getSelectedRadio(){
-        var radio = document.forms[0].recurring;
-        for (var i=0; i<radio.length;i++) {
-            if (radio[i].checked) {
-                recurringValue=radio[i].value;
-            }return recurringValue    
+        if (recurring.checked) {
+            recurringValue = $('recurring').value;
+        }else{
+            recurringValue = "no"
         }
+    return recurringValue; 
     }
     
     //find checkbox value    
