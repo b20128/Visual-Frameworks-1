@@ -9,8 +9,8 @@ window.addEventListener("DOMContentLoaded", function (){
 alert("javascript loaded!!");
     //variables
     var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visionary"],
-       recurringValue,
-       rememberValue;
+       rememberValue,
+       recurringValue;
        errMsg = $('errors');
        
     //get element by id function
@@ -34,7 +34,7 @@ alert("javascript loaded!!");
         selectLi.appendChild(makeSelect)
     }
     
-    
+        
     //find the value of selected radio button
     function getSelectedRadio(){
         if (recurring.checked) {
@@ -45,18 +45,18 @@ alert("javascript loaded!!");
     return recurringValue; 
     }
     
-    //find checkbox value    
+    //find the value of the selected Checkboxes
     function getCheckboxValue() {
         var checkboxes = document.forms[0].obj;
         var checkedValue = [];
         for(i=0,j=checkboxes.length; i<j; i++) {
             if (checkboxes[i].checked) {
-                var checkedboxes = checkboxes[i].value;
-                checkedValue.push(checkedboxes);
+                var checkedBoxes = checkboxes[i].value;
+                checkedValue.push(checkedBoxes);
                 var rememberValue = JSON.stringify(checkedValue);
-                return rememberValue;
+                
             }
-        }
+        }return rememberValue;
     }
     
     function toggleControls(n) {
@@ -92,9 +92,10 @@ alert("javascript loaded!!");
          if (localStorage == 0) {
             localStorage.clear();
          }
-         
+        
         getSelectedRadio();
         getCheckboxValue();
+        
         //gather up our values in an object.
         //object properties contain an array w/ form lable and inputs values.
         var item            = {};
@@ -102,7 +103,7 @@ alert("javascript loaded!!");
             item.specifics  = ["Any Specifics: ", $('specifics').value];
             item.important  = ["Level of Importance: ",$('important').value];
             item.recurring = ["Have this dream before?: ",recurringValue];
-            item.remember   = ["I Remember?", rememberValue];
+            item.remember   = ["I Remember?",rememberValue];
             item.indepth    = ["Tell Me More: ", $('indepth').value];
         //save data to local storage. Use stringafy to convert our objects to a string
         localStorage.setItem(id, JSON.stringify(item))
