@@ -8,7 +8,7 @@ Project 4 javascript
 window.addEventListener("DOMContentLoaded", function (){
 alert("javascript loaded!!");
     //variables
-    var dreamKind = ["--what kind of dream?--", "dream", "nightmare", "visionary"],
+    var itemKind = ["--What section is this in?--", "Breads", "Dairy", "Meats", "Fruits and Vegetables", "Snacks", "Deli", "Cans"],
        rememberValue,
        recurringValue;
        errMsg = $('errors');
@@ -23,10 +23,10 @@ alert("javascript loaded!!");
         var formTag = document.getElementsByTagName('form'),
             selectLi = $("select"),
             makeSelect = document.createElement("select");
-            makeSelect.setAttribute("id", "dreamKind");
-        for (var i=0, j=dreamKind.length; i<j; i++) {
+            makeSelect.setAttribute("id", "itemKind");
+        for (var i=0, j=itemKind.length; i<j; i++) {
             var makeOption = document.createElement('option');
-            var optText = dreamKind[i];
+            var optText = itemKind[i];
             makeOption.setAttribute('value', optText);
             makeOption.innerHTML = optText;
             makeSelect.appendChild(makeOption);
@@ -45,19 +45,6 @@ alert("javascript loaded!!");
     return recurringValue; 
     }
     
-    //find the value of the selected Checkboxes
-    function getCheckboxValue() {
-        var checkboxes = document.forms[0].obj;
-        var checkedValue = [];
-        for(i=0,j=checkboxes.length; i<j; i++) {
-            if (checkboxes[i].checked) {
-                var checkedBoxes = checkboxes[i].value;
-                checkedValue.push(checkedBoxes);
-                var rememberValue = JSON.stringify(checkedValue);
-                
-            }
-        }return rememberValue;
-    }
     
     function toggleControls(n) {
         switch (n) {
@@ -100,11 +87,10 @@ alert("javascript loaded!!");
         //gather up our values in an object.
         //object properties contain an array w/ form lable and inputs values.
         var item            = {};
-            item.ItWasA     = ["Dream Kind: ",$('dreamKind').value];
-            item.specifics  = ["Any Specifics: ", $('specifics').value];
-            item.important  = ["Level of Importance: ",$('important').value];
-            item.recurring = ["Have this dream before?: ",recurringValue];
-            item.remember   = ["I Remember?",rememberValue];
+            item.ItWasA     = ["Item Kind: ",$('itemKind').value];
+            item.specifics  = ["Item Name: ", $('specifics').value];
+            item.important  = ["How many?: ",$('important').value];
+            item.recurring = ["Essential?: ",recurringValue];
             item.indepth    = ["Tell Me More: ", $('indepth').value];
         //save data to local storage. Use stringafy to convert our objects to a string
         localStorage.setItem(id, JSON.stringify(item))
@@ -160,34 +146,7 @@ alert("javascript loaded!!");
     //autopopulate local storage.
     function autoFillData() {
         //the actual JSON OBJECT data required for this to work is coming from json.js
-        var json = {
-    "myNearDeath":{
-        "ItWasA"   : ["Dream Kind: ", "visionary"],
-        "specifics": ["Any Specifics: ", "I saw angels, looking at us"],
-        "important": ["Level of Importance: ", 10],
-        "recurring": ["Have this dream before?: ","No"],
-        "remember" : ["I Remember?","People","Colors"],
-        "indepth"  : ["Tell Me More: ", "I seen behind the vail for a brief second, i was hit by a car when i was 9, they said i died but I remember things, vividly... holding my moms hand feeling like i was slipping away, like falling asleep but it starts in your fingers and works its way up like waking up from the matrix or being submerged into cold water that you can breath. I never left my body though i felt, if i gave the command to my body to jump, i wouldnt be here right now like if i wanted to go i could have. i seen what had to have been 2 angels, i remember one of them asking the other 'this one?', and the other saying to the first, 'not yet.' telling another it wasnt my time yet, a light brighter than any i had ever seen behind them then, nothing."]
-    },
-    
-    "Revalation":{
-        "ItWasA"   : ["Dream Kind: ", "dream"],
-        "specifics": ["Any Specifics: ", "I saw the throne"],
-        "important": ["Level of Importance: ", 5],
-        "recurring": ["Have this dream before?: ","No"],
-        "remember" : ["I Remember?","Colors","People"],
-        "indepth"  : ["Tell Me More: ", "and the one who sat on it, whos face the earth fled away from, called me an said 'the time has come. Write all that you see."]
-    },
-    
-    "GenaricDream":{
-        "ItWasA"   : ["Dream Kind: ", "nightmare"],
-        "specifics": ["Any Specifics: ", "The Beast"],
-        "important": ["Level of Importance: ", 10],
-        "recurring": ["Have this dream before?: ","Yes"],
-        "remember" : ["I Remember?","Feelings", "People"],
-        "indepth"  : ["Tell Me More: ", "i seen how he'll convince the world, who doesn't believe, to turn on those who do. He'll use free will as his defense to bring about lawlessness, there's no way of stoping it without making you look like your atacking a God-given right, when you stand up for whats right. they'll call them 'moral police' when really they(those with the Spirit) are the only thing keeping the world from destruction"]
-    }
-}
+        var json = {}
         //store the Json OBJECT into Local Storage.
         for (var n in json) {
             var id = Math.floor(Math.random()*100000000);
@@ -228,7 +187,7 @@ alert("javascript loaded!!");
         toggleControls('off');
         
         //populate the form fields with current localStorage values
-        $('dreamKind').value = item.ItWasA[1];
+        $('itemKind').value = item.ItWasA[1];
         $('specifics').value = item.specifics[1];
         $('important').value = item.important[1];
         $('indepth').value = item.indepth[1];
@@ -238,8 +197,6 @@ alert("javascript loaded!!");
                 radios[i].setAttribute("checked","checked");
             }
         }
-        $('remember').value = item.remember[1];
-        //Remove the initial listener from the nput "Save Info" button
         save.removeEventListener("click", storeFormInfo);
         //changeSubmit Button Value to Edit Button
         $("submit").value = "edit data";
@@ -275,32 +232,26 @@ alert("javascript loaded!!");
     
     function validate(e){
         //define the elements we waant to check
-        var getdreamKind = $('dreamKind');
+        var getitemKind = $('itemKind');
         var getSpecifics = $('specifics');
-        var getInDepth   = $('indepth');
         
         //get Error messages
         var messageAry = [];
         //dreamKind validation
-        if (getdreamKind.value=="--what kind of dream?--") {
+        if (getitemKind.value=="--What section is this in?--") {
             var groupError = "Please Choose a Group...";
-            getdreamKind.style.border= "1px solid red";
+            getitemKind.style.border= "1px solid red";
             messageAry.push(groupError);
         }
         
         //Specifics Validation
         if (getSpecifics.value === "") {
-            var specificsErr = "Please enter at least 1 detail...";
+            var specificsErr = "Please enter at least the item name...";
             getSpecifics.style.border= "1px solid red";
             messageAry.push(specificsErr);
         }
         
-        //InDepth Validation
-        if (getInDepth.value === "") {
-            var inDepthErr = "Please enter at least 1 detail...";
-            getInDepth.style.border= "1px solid red";
-            messageAry.push(inDepthErr);
-        }
+        
         //if there were errors, display them on the screen
         if (messageAry.length>=1){
             for (var i=0,j=messageAry.length;i<j;i++) {

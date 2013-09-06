@@ -5,34 +5,37 @@ CSS sheet
 project 2
 */
 body{
-    background-image:url(http://www.plotinus.com/vega_john5b.jpg);
+    background-color: #003366;
     background-repeat: no-repeat;
     background-size: cover;
 }
 h1{
-    background-color: transparent;
-    border: 2px #000;
-    width: inherit;
-    color: white;
-    font-family: sans-serif;
+    background-color: #f0f0f0; 
+    width: auto;
+    color: black;
+    font-family: !important;
     font-size: x-large;
     text-align: center;
     text-shadow: 3px;
     text-emphasis: none;
     text-outline: 1px #ffffff;
 }
+h3{
+    background: images/Button_upSkin.png;
+    margin: 10px;
+    border: thin;
+}
 h2{
-    background-color: transparent;
+    background-color:#C0C0C0;
     border: 2px #000;
     width: inherit;
     color: white;
-    text-align: center;
+    text-align: left;
     text-shadow: 3px;
-    text-emphasis: none;
-    text-outline: .5px #ffffff;
 }
 a{
-  color: #fff000;
+  font-family: sans-serif;
+  color: #fff;
   background-color: transparent;
 }
 a:hover{
@@ -56,10 +59,9 @@ legend{
     alignment-adjust: central;
 }
 div{
-    background: #000;
+    background: #909090;
     border: 1px thin;
     width: auto;
-    color: #fff;
     font: cursive large 100 bold;
     text-align: inherit;
     text-shadow: 3px;
